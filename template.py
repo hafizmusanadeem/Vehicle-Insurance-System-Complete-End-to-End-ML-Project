@@ -25,11 +25,13 @@ list_of_files = [
     f"{project_name}/entity/estimator.py",
     f"{project_name}/entity/s3_estimator.py",
     f"{project_name}/exception/__init__.py",
+    f"{project_name}/exception/customexception.py",
     f"{project_name}/logger/__init__.py",
     f"{project_name}/logger/logger.py",
     f"{project_name}/pipline/__init__.py",
     f"{project_name}/pipline/training_pipeline.py",
     f"{project_name}/pipline/prediction_pipeline.py",
+    f"{project_name}/tests/test_mongodb.py",
     f"{project_name}/utils/__init__.py",
     f"{project_name}/utils/main_utils.py",
     "app.py",
@@ -41,6 +43,7 @@ list_of_files = [
     "pyproject.toml",
     "config/model.yaml",
     "config/schema.yaml",
+    "pytest.ini"
 ]
 
 for filepath in list_of_files:

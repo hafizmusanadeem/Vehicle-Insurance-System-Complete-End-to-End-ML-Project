@@ -1,5 +1,7 @@
 ipykernel
 pandas
+ydata-profiling
+pydantic-settings
 numpy
 matplotlib
 plotly
@@ -18,4 +20,6 @@ python-multipart
 uvicorn
 jinja2
 imblearn
+pytest
+pytest-mock
 -e .

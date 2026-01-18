@@ -21,20 +21,20 @@
 #     raise MyException(e, sys) from e
 
 
-from src.logger.logger import configure_logger
-from src.exception import MyException
-import sys
+# from src.logger.logger import configure_logger
+# from src.exception import MyException
+# import sys
 
-configure_logger()  # ✅ must call at start
+# configure_logger()  # ✅ must call at start
 
-try:
-    1 / 0
-except Exception as e:
-    raise MyException(e, sys)
+# try:
+#     a = 2+2
+# except Exception as e:
+#     raise MyException(e, sys)
 
 # --------------------------------------------------------------------------------
 
-# from src.pipline.training_pipeline import TrainPipeline
+from src.pipline.training_pipeline import TrainPipeline
 
-# pipline = TrainPipeline()
-# pipline.run_pipeline()
+pipline = TrainPipeline()
+pipline.run_pipeline()
