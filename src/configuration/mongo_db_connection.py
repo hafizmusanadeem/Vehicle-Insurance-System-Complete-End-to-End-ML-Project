@@ -67,9 +67,9 @@ class MongoDBClient:
                 cls._client = MongoClient(
                     mongo_db_url,
                     tlsCAFile=CA_FILE,
-                    serverSelectionTimeoutMS=5000,
-                    connectTimeoutMS=10000,
-                    socketTimeoutMS=10000,
+                    serverSelectionTimeoutMS=50000,
+                    connectTimeoutMS=100000,
+                    socketTimeoutMS=100000,
                     maxPoolSize=50,
                     retryWrites=True
                 )

@@ -39,8 +39,12 @@ class DataValidation:
         Output: Returns list of error messages.
         """
         errors = []
+        logging.info("Entered the Column Validation Method")
 
-        expected_columns = set(self.schema["columns"])
+        schema_columns = []
+        for column_dict in self.schema["columns"]:
+            schema_columns.extend(list(column_dict.keys()))
+        expected_columns = set(schema_columns)
         actual_columns = set(df.columns)
 
         missing = expected_columns - actual_columns

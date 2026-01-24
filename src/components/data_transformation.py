@@ -46,7 +46,7 @@ class DataTransformation:
         try:
             numeric_features = self.schema["num_features"]
             minmax_features = self.schema["mm_columns"]
-            categorical_features = self.schema["cat_features"]
+            categorical_features = self.schema["categorical_columns"]
             drop_columns = self.schema["drop_columns"]
 
             numeric_pipeline = Pipeline(steps=[
