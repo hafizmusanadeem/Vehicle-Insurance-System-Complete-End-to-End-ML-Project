@@ -92,8 +92,9 @@ class VehicleDataClassifier:
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path
             )
+            logging.info("Going for Prediction")
             result = model.predict(dataframe)
-
+            logging.info("Result is Loaded")
             return result
         
         except Exception as e:
