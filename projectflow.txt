@@ -98,7 +98,7 @@
 27. Getting started with CI-CD process:
       * Setup the dockerfile and .dockerignore file
       * Setup the .github\workflows dir and aws.yaml file within
-      * Go to AWS console and create a new IAM user exactly the way we did earlier (name: "usvisa-user") >>
+      * Go to AWS console and create a new IAM user exactly the way we did earlier (name: "vehicle-project") >>
         Go inside user >> Security Credentials >> Access Keys >> create access key >> CLI >> check agreement
         >> next >> create access key >> download csv
       * Now create one ECR repo to store/save docker image:
