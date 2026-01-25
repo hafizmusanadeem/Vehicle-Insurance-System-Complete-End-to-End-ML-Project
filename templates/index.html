@@ -30,8 +30,12 @@
             <label for="Previously_Insured">Previously Insured ("0" for No, "1" for Yes):</label>
             <input type="number" id="Previously_Insured" name="Previously_Insured" required>
 
-            <label for="Vehicle_Age_lt_1_Year">Vehicle Age Type: "< 1 Year" OR "1-2 Year":</label>
-            <input type="text" id="Vehicle_Age_lt_1_Year" name="Vehicle_Age_lt_1_Year" required>
+            <label for="Vehicle_Age">Vehicle Age Type: "< 1 Year" OR "1-2 Year":</label>
+            <select id="Vehicle_Age" name="Vehicle_Age" required>
+                <option value="< 1 Year">< 1 Year</option>
+                <option value="1-2 Year">1-2 Year</option>
+                <option value="> 2 Years">> 2 Years</option>
+            </select>
 
             <label for="Vehicle_Damage">Vehicle Damage Type Only(No,Yes):</label>
             <input type="text" id="Vehicle_Damage" name="Vehicle_Damage" required>
