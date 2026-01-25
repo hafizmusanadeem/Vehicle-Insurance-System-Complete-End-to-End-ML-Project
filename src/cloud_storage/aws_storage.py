@@ -7,7 +7,7 @@ from src.logger import logging
 from mypy_boto3_s3.service_resource import Bucket
 from src.exception import MyException
 from botocore.exceptions import ClientError
-from pandas import DataFrame,read_csv
+from pandas import DataFrame
 import pickle
 
 
@@ -44,6 +44,33 @@ class SimpleStorageService:
         except Exception as e:
             raise MyException(e, sys)
         
+    @staticmethod
+    def read_object(object_name: str, decode: bool = True, make_readable: bool = False) -> Union[StringIO, str]:
+        """
+        Reads the specified S3 object with optional decoding and formatting.
+
+        Args:
+            object_name (str): The S3 object name.
+            decode (bool): Whether to decode the object content as a string.
+            make_readable (bool): Whether to convert content to StringIO for DataFrame usage.
+
+        Returns:
+            Union[StringIO, str]: The content of the object, as a StringIO or decoded string.
+        """
+        # logging.info("Entered the read_object method of SimpleStorageService class")
+        try:
+            # Read and decode the object content if decode=True
+            func = (
+                lambda: object_name.get()["Body"].read().decode()
+                if decode else object_name.get()["Body"].read()
+            )
+            # Convert to StringIO if make_readable=True
+            conv_func = lambda: StringIO(func()) if make_readable else func()
+            # logging.info("Exited the read_object method of SimpleStorageService class")
+            return conv_func()
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
     def load_model(self, model_name: str, bucket_name: str, model_dir: str = None) -> object:
         """
         Loads a serialized model from the specified S3 bucket.
@@ -63,6 +90,46 @@ class SimpleStorageService:
             model = pickle.loads(model_obj)
             logging.info("Production model loaded from S3 bucket.")
             return model
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
+    def get_bucket(self, bucket_name: str) -> Bucket:
+        """
+        Retrieves the S3 bucket object based on the provided bucket name.
+
+        Args:
+            bucket_name (str): The name of the S3 bucket.
+
+        Returns:
+            Bucket: S3 bucket object.
+        """
+        logging.info("Entered the get_bucket method of SimpleStorageService class")
+        try:
+            bucket = self.s3_resource.Bucket(bucket_name)
+            logging.info("Exited the get_bucket method of SimpleStorageService class")
+            return bucket
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
+    def get_file_object(self, filename: str, bucket_name: str) -> Union[List[object], object]:
+        """
+        Retrieves the file object(s) from the specified bucket based on the filename.
+
+        Args:
+            filename (str): The name of the file to retrieve.
+            bucket_name (str): The name of the S3 bucket.
+
+        Returns:
+            Union[List[object], object]: The S3 file object or list of file objects.
+        """
+        logging.info("Entered the get_file_object method of SimpleStorageService class")
+        try:
+            bucket = self.get_bucket(bucket_name)
+            file_objects = [file_object for file_object in bucket.objects.filter(Prefix=filename)]
+            func = lambda x: x[0] if len(x) == 1 else x
+            file_objs = func(file_objects)
+            logging.info("Exited the get_file_object method of SimpleStorageService class")
+            return file_objs
         except Exception as e:
             raise MyException(e, sys) from e
         

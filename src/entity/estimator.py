@@ -40,7 +40,7 @@ class MyModel:
 
             # Step 2: Predict
             logging.info("Using the trained model to get predictions")
-            predictions = self.trained_model_object.predict(transformed_feature)
+            predictions = self.trained_model_object.predict(transformed_feature) # type: ignore
 
             return predictions
 

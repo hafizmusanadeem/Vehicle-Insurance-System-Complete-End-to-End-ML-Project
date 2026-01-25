@@ -41,6 +41,7 @@ class DataForm:
     """
     def __init__(self, request: Request):
         self.request: Request = request
+        self.id: Optional[int] = None
         self.Gender: Optional[int] = None
         self.Age: Optional[int] = None
         self.Driving_License: Optional[int] = None
@@ -49,9 +50,8 @@ class DataForm:
         self.Annual_Premium: Optional[float] = None
         self.Policy_Sales_Channel: Optional[float] = None
         self.Vintage: Optional[int] = None
-        self.Vehicle_Age_lt_1_Year: Optional[int] = None
-        self.Vehicle_Age_gt_2_Years: Optional[int] = None
-        self.Vehicle_Damage_Yes: Optional[int] = None
+        self.Vehicle_Age: Optional[str] = None
+        self.Vehicle_Damage: Optional[int] = None
                 
 
     async def get_vehicle_data(self):
@@ -60,6 +60,7 @@ class DataForm:
         This method is asynchronous to handle form data fetching without blocking.
         """
         form = await self.request.form()
+        self.id = form.get("id")
         self.Gender = form.get("Gender")
         self.Age = form.get("Age")
         self.Driving_License = form.get("Driving_License")
@@ -68,9 +69,8 @@ class DataForm:
         self.Annual_Premium = form.get("Annual_Premium")
         self.Policy_Sales_Channel = form.get("Policy_Sales_Channel")
         self.Vintage = form.get("Vintage")
-        self.Vehicle_Age_lt_1_Year = form.get("Vehicle_Age_lt_1_Year")
-        self.Vehicle_Age_gt_2_Years = form.get("Vehicle_Age_gt_2_Years")
-        self.Vehicle_Damage_Yes = form.get("Vehicle_Damage_Yes")
+        self.Vehicle_Age = form.get("Vehicle_Age")
+        self.Vehicle_Damage = form.get("Vehicle_Damage")
 
 # Route to render the main page with the form
 @app.get("/", tags=["authentication"])
@@ -106,17 +106,17 @@ async def predictRouteClient(request: Request):
         await form.get_vehicle_data()
         
         vehicle_data = VehicleData(
+                                id=form.id,
                                 Gender= form.Gender,
                                 Age = form.Age,
                                 Driving_License = form.Driving_License,
                                 Region_Code = form.Region_Code,
                                 Previously_Insured = form.Previously_Insured,
+                                Vehicle_Age = form.Vehicle_Age,
+                                Vehicle_Damage = form.Vehicle_Damage,
                                 Annual_Premium = form.Annual_Premium,
                                 Policy_Sales_Channel = form.Policy_Sales_Channel,
-                                Vintage = form.Vintage,
-                                Vehicle_Age_lt_1_Year = form.Vehicle_Age_lt_1_Year,
-                                Vehicle_Age_gt_2_Years = form.Vehicle_Age_gt_2_Years,
-                                Vehicle_Damage_Yes = form.Vehicle_Damage_Yes
+                                Vintage = form.Vintage
                                 )
 
         # Convert form data into a DataFrame for the model
